@@ -1552,20 +1552,23 @@ load();setInterval(load,600000);rvDraw();
    finally{clearTimeout(timer)}
   }));
   if(document.getElementById('sel')?.value!==requestedLocation)return;
+  if(responses.every(r=>r.status==='rejected'))console.warn('NWS advisories: all API requests failed; no-alert display is not verified.');
   const now=Date.now(),unique=new Map();
   responses.forEach(r=>{if(r.status!=='fulfilled')return;r.value.forEach(a=>{
    const p=a.properties||{};
    if(p.status==='Test'||p.status==='Draft'||p.messageType==='Cancel')return;
    if(p.expires&&Date.parse(p.expires)<=now)return;
-   if(p.onset&&Date.parse(p.onset)>now)return;
+   // NWS active feed includes issued advisories scheduled to begin later today.
+   // Do not discard them solely because onset is in the future.
+   if(p.effective&&Date.parse(p.effective)>now)return;
    const selected=(document.getElementById('sel')?.value||'').split(',').slice(2).join(',').trim();
    const area=String(p.areaDesc||'').toLowerCase();
    const zones=(p.affectedZones||[]).map(z=>String(z).split('/').pop().toUpperCase());
    const isVI=/St\. Thomas|St\. Croix|Tortola/i.test(selected);
-   const local=/Mayaguez/i.test(selected)?/mayag[uü]ez|western puerto rico|west puerto rico|mona passage|aguadilla|rincon|a[nñ]asco|puerto rico/i.test(area)||zones.some(z=>['AMZ741','AMZ742','AMZ745'].includes(z)):
-    /Fajardo/i.test(selected)?/fajardo|eastern puerto rico|puerto rico/i.test(area)||zones.some(z=>['AMZ726','AMZ725'].includes(z)):
-    /Culebra/i.test(selected)?/culebra|puerto rico/i.test(area)||zones.some(z=>['AMZ726','AMZ725'].includes(z)):
-    /San Juan/i.test(selected)?/san juan|puerto rico/i.test(area)||zones.some(z=>['AMZ726','AMZ725'].includes(z)):
+   const local=/Mayaguez/i.test(selected)?/mayag[uü]ez|northwest|western puerto rico|west puerto rico|mona passage|aguadilla|rincon|a[nñ]asco|puerto rico/i.test(area)||zones.some(z=>['PRZ010','PRZ008','AMZ741','AMZ742','AMZ745'].includes(z)):
+    /Fajardo/i.test(selected)?/fajardo|northeast|eastern puerto rico|puerto rico/i.test(area)||zones.some(z=>['PRZ002','AMZ726','AMZ725'].includes(z)):
+    /Culebra/i.test(selected)?/culebra|puerto rico/i.test(area)||zones.some(z=>['PRZ012','AMZ726','AMZ725'].includes(z)):
+    /San Juan/i.test(selected)?/san juan|puerto rico/i.test(area)||zones.some(z=>['PRZ001','AMZ726','AMZ725'].includes(z)):
     /St\. Thomas/i.test(selected)?/st\.? thomas|virgin islands|usvi/i.test(area)||zones.some(z=>['AMZ715','AMZ725','AMZ732'].includes(z)):
     /St\. Croix/i.test(selected)?/st\.? croix|virgin islands|usvi/i.test(area)||zones.some(z=>['AMZ735','AMZ725'].includes(z)):
     /Tortola/i.test(selected)?/virgin islands|usvi/i.test(area)&&!zones.length:false;
