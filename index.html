@@ -524,6 +524,7 @@ html.webcams-full-page .wc-root{padding-bottom:calc(110px + env(safe-area-inset-
 </style>
 <style id="rw-v105-detail-scroll-stability">
 /* Stable scrolling in GitHub Pages embedded as a Wix website URL. */
+html.detail-open{scroll-behavior:auto!important;}
 html.detail-open,html.detail-open body,
 html.detail-open #modal,html.detail-open #mbody{
  scroll-behavior:auto!important;
@@ -736,9 +737,9 @@ main.grid>.rw-ibt73-mobile-card .rw-partner-pair>.rw-ibt73-sponsor{
   <div class="rw-boat-conditions-content"><h3>Boating conditions</h3>
    <div class="go"><div class="badge" id="go">–</div><div class="rw-boat-conditions-reading"><div id="gotx" style="font-weight:600">–</div><div class="n" id="gosub"></div></div></div>
   </div>
-  <div class="rw-partner-pair rw-partner-pair-desktop"><a class="rw-ibt73-sponsor" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://clubnauticodesanjuan.com/V2/" target="_blank" rel="noopener noreferrer" aria-label="International Billfish Tournament 73, Club Náutico de San Juan — visit tournament website" title="International Billfish Tournament 73 · Club Náutico de San Juan"><img src="https://static.wixstatic.com/media/80c250_bfd41e8b8e22460c8bfe88dfa6fe8998~mv2.png" alt="Club Náutico de San Juan IBT 73 · 2026 · Presented by Popular" decoding="async"></a><a class="rw-ibt73-sponsor" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://marinacapcana.com" target="_blank" rel="noopener noreferrer" aria-label="Marina Cap Cana — visit website" title="Marina Cap Cana"><img src="https://static.wixstatic.com/media/80c250_e4abf55d62514d82ae14e097b86a5e07~mv2.png" alt="Marina Cap Cana" decoding="async"></a></div>
+  <div class="rw-partner-pair rw-partner-pair-desktop"><a class="rw-ibt73-sponsor" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://clubnauticodesanjuan.com/V2/" target="_blank" rel="noopener noreferrer" aria-label="International Billfish Tournament 73, Club Náutico de San Juan — visit tournament website" title="International Billfish Tournament 73 · Club Náutico de San Juan"><img src="https://static.wixstatic.com/media/80c250_bfd41e8b8e22460c8bfe88dfa6fe8998~mv2.png" alt="Club Náutico de San Juan IBT 73 · 2026 · Presented by Popular" decoding="async"></a><a class="rw-ibt73-sponsor" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://marinacc.digital/torneo/?t=cap-cana-classic-2026" target="_blank" rel="noopener noreferrer" aria-label="Marina Cap Cana — visit website" title="Marina Cap Cana"><img src="https://static.wixstatic.com/media/80c250_e4abf55d62514d82ae14e097b86a5e07~mv2.png" alt="Marina Cap Cana" decoding="async"></a></div>
  </div></section>
- <section class="c w3 rw-ibt73-mobile-card" aria-label="International Billfish Tournament 73 partner"><div class="rw-partner-pair"><a class="rw-ibt73-sponsor" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://clubnauticodesanjuan.com/V2/" target="_blank" rel="noopener noreferrer" aria-label="International Billfish Tournament 73, Club Náutico de San Juan — visit tournament website"><img src="https://static.wixstatic.com/media/80c250_bfd41e8b8e22460c8bfe88dfa6fe8998~mv2.png" alt="Club Náutico de San Juan IBT 73 · 2026 · Presented by Popular" decoding="async"></a><a class="rw-ibt73-sponsor" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://marinacapcana.com" target="_blank" rel="noopener noreferrer" aria-label="Marina Cap Cana — visit website"><img src="https://static.wixstatic.com/media/80c250_e4abf55d62514d82ae14e097b86a5e07~mv2.png" alt="Marina Cap Cana" decoding="async"></a></div></section>
+ <section class="c w3 rw-ibt73-mobile-card" aria-label="International Billfish Tournament 73 partner"><div class="rw-partner-pair"><a class="rw-ibt73-sponsor" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://clubnauticodesanjuan.com/V2/" target="_blank" rel="noopener noreferrer" aria-label="International Billfish Tournament 73, Club Náutico de San Juan — visit tournament website"><img src="https://static.wixstatic.com/media/80c250_bfd41e8b8e22460c8bfe88dfa6fe8998~mv2.png" alt="Club Náutico de San Juan IBT 73 · 2026 · Presented by Popular" decoding="async"></a><a class="rw-ibt73-sponsor" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://marinacc.digital/torneo/?t=cap-cana-classic-2026" target="_blank" rel="noopener noreferrer" aria-label="Marina Cap Cana — visit website"><img src="https://static.wixstatic.com/media/80c250_e4abf55d62514d82ae14e097b86a5e07~mv2.png" alt="Marina Cap Cana" decoding="async"></a></div></section>
  <section class="c w3 top-rain"><h3>Rain chance · next 12 hrs · <span id="rloc" class="aq">Fajardo, PR</span></h3><svg id="rain" viewBox="0 0 720 150" style="width:100%;height:auto" role="img" aria-label="Rain probability chart"></svg></section>
  <section class="c active-advisories" id="activeAdvisories" tabindex="0" role="button" aria-label="Open active weather advisories" aria-hidden="true">
   <div class="advisory-compact-layout">
@@ -1079,6 +1080,17 @@ function rwDetailLocationBadge(){
  const regional=/radar|satellite|tropic|precipitable|webcam|marine links|save rabirubiaweather/i.test(($('mt')||{}).textContent||'');
  badge.dataset.scope=regional?'regional':'local';
 }
+// Reset all scroll surfaces used by desktop overlays and mobile document flow.
+// With GitHub Pages embedded in Wix, this only controls the GitHub document;
+// cross-origin Wix parent scroll position cannot be changed from this iframe.
+function rwResetDetailTop(){
+ const modal=$('modal'), body=$('mbody');
+ if(modal){modal.scrollTop=0;modal.scrollLeft=0;}
+ if(body){body.scrollTop=0;body.scrollLeft=0;}
+ document.documentElement.scrollTop=0;
+ document.body.scrollTop=0;
+ window.scrollTo(0,0);
+}
 function activateDetail(){
  rwDetailLocationBadge();
  const wasOpen=document.body.classList.contains('detail-open');
@@ -1086,18 +1098,18 @@ function activateDetail(){
  document.documentElement.classList.add('detail-open');
  document.body.classList.add('detail-open');
  $('modal').classList.add('on');
- $('mbody').scrollTop=0;
- $('mbody').scrollLeft=0;
- // Mobile detail pages use the document as their scroll surface.
- // Reset synchronously after switching layouts, then once after layout settles.
- window.scrollTo({top:0,left:0,behavior:'instant'});
+ // CSS switches mobile from the homepage to document-flow detail mode.
+ // Reset after the mode switch, and again after layout has been calculated.
+ rwResetDetailTop();
  requestAnimationFrame(()=>{
-   if(document.body.classList.contains('detail-open')){
-     $('mbody').scrollTop=0;
-     window.scrollTo({top:0,left:0,behavior:'instant'});
-   }
+   if(!document.body.classList.contains('detail-open'))return;
+   rwResetDetailTop();
+   requestAnimationFrame(()=>{
+     if(document.body.classList.contains('detail-open'))rwResetDetailTop();
+   });
  });
 }
+
 function closeM(){
  $('modal').classList.remove('on');
  document.body.classList.remove('detail-open');
@@ -1815,10 +1827,10 @@ svg.chart,canvas{touch-action:pan-y;pointer-events:auto}
   transform-origin:center center;
 }
 </style></head><body><header><div class="brand"><img src="https://static.wixstatic.com/media/80c250_314402dd36ed4723ae16cacbd1d0df82~mv2.png" alt="RabirubiaWeather logo"><div><strong>Rabirubia<span>Weather</span>.com</strong><small>OFFSHORE FISHING INTELLIGENCE</small></div></div><div class="edition">CAPTAIN'S REPORT · V27<br><span id="stamp">Updating forecasts…</span></div></header><main>
-<div class="hero"><div><div class="eyebrow">BUILT FOR THE BLUE WATER</div><h1>Find the <em>productive water for serious fishing.</em></h1><p class="sub">Offshore weather, water temperature, currents, tide cycles and fishing windows — clean charts, good data.</p></div><div class="tabs"><button id="btn-pr" class="active" onclick="switchRegion('pr')">🇵🇷 Puerto Rico</button><button id="btn-dr" onclick="switchRegion('dr')">🇩🇴 Punta Cana / Cap Cana</button><div class="rw-fishing-ibt73-desktop rw-fishing-partner-pair"><a class="rw-fishing-partner" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://clubnauticodesanjuan.com/V2/" target="_blank" rel="noopener noreferrer" aria-label="International Billfish Tournament 73 · Club Náutico de San Juan (opens in new tab)"><img src="https://static.wixstatic.com/media/80c250_bfd41e8b8e22460c8bfe88dfa6fe8998~mv2.png" alt="International Billfish Tournament 73 · 2026 · Club Náutico de San Juan" loading="eager" decoding="async"></a><a class="rw-fishing-partner" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://marinacapcana.com" target="_blank" rel="noopener noreferrer" aria-label="Marina Cap Cana — visit website"><img src="https://static.wixstatic.com/media/80c250_e4abf55d62514d82ae14e097b86a5e07~mv2.png" alt="Marina Cap Cana" loading="eager" decoding="async"></a></div></div></div>
+<div class="hero"><div><div class="eyebrow">BUILT FOR THE BLUE WATER</div><h1>Find the <em>productive water for serious fishing.</em></h1><p class="sub">Offshore weather, water temperature, currents, tide cycles and fishing windows — clean charts, good data.</p></div><div class="tabs"><button id="btn-pr" class="active" onclick="switchRegion('pr')">🇵🇷 Puerto Rico</button><button id="btn-dr" onclick="switchRegion('dr')">🇩🇴 Punta Cana / Cap Cana</button><div class="rw-fishing-ibt73-desktop rw-fishing-partner-pair"><a class="rw-fishing-partner" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://clubnauticodesanjuan.com/V2/" target="_blank" rel="noopener noreferrer" aria-label="International Billfish Tournament 73 · Club Náutico de San Juan (opens in new tab)"><img src="https://static.wixstatic.com/media/80c250_bfd41e8b8e22460c8bfe88dfa6fe8998~mv2.png" alt="International Billfish Tournament 73 · 2026 · Club Náutico de San Juan" loading="eager" decoding="async"></a><a class="rw-fishing-partner" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://marinacc.digital/torneo/?t=cap-cana-classic-2026" target="_blank" rel="noopener noreferrer" aria-label="Marina Cap Cana — visit website"><img src="https://static.wixstatic.com/media/80c250_e4abf55d62514d82ae14e097b86a5e07~mv2.png" alt="Marina Cap Cana" loading="eager" decoding="async"></a></div></div></div>
 <div class="sectionhead"><div><div class="region" id="regiontag">PUERTO RICO · NORTHEAST OFFSHORE</div><div class="mini" id="pointname">Fajardo offshore reference point</div></div><div class="pill" id="status">Loading live model data…</div></div>
 <section class="section"><div class="sectionhead"><h2>01 · Offshore conditions</h2><span class="hint">Model guidance at selected offshore point · knots / feet / °F</span></div><div class="metrics"><div class="card metric"><div class="label">🌬 Wind</div><div class="num" id="wind">—</div><div class="detail" id="winddetail">10 m wind · kt</div></div><div class="card metric"><div class="label">💨 Gusts</div><div class="num" id="gust">—</div><div class="detail">kt</div></div><div class="card metric"><div class="label">🌊 Seas</div><div class="num" id="waves">—</div><div class="detail">Significant wave · ft</div></div><div class="card metric"><div class="label">〰 Wave period</div><div class="num" id="period">—</div><div class="detail">seconds</div></div><div class="card metric"><div class="label">↗ Swell</div><div class="num" id="swell">—</div><div class="detail" id="swelldir">ft · direction</div></div><div class="card metric"><div class="label">🌡 Sea temp</div><div class="num" id="sst">—</div><div class="detail">Sea surface · °F</div></div></div></section>
-<div class="rw-fishing-ibt73-mobile rw-fishing-partner-pair"><a class="rw-fishing-partner" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://clubnauticodesanjuan.com/V2/" target="_blank" rel="noopener noreferrer" aria-label="International Billfish Tournament 73 · Club Náutico de San Juan (opens in new tab)"><img src="https://static.wixstatic.com/media/80c250_bfd41e8b8e22460c8bfe88dfa6fe8998~mv2.png" alt="International Billfish Tournament 73 · 2026 · Club Náutico de San Juan" loading="lazy" decoding="async"></a><a class="rw-fishing-partner" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://marinacapcana.com" target="_blank" rel="noopener noreferrer" aria-label="Marina Cap Cana — visit website"><img src="https://static.wixstatic.com/media/80c250_e4abf55d62514d82ae14e097b86a5e07~mv2.png" alt="Marina Cap Cana" loading="lazy" decoding="async"></a></div>
+<div class="rw-fishing-ibt73-mobile rw-fishing-partner-pair"><a class="rw-fishing-partner" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://clubnauticodesanjuan.com/V2/" target="_blank" rel="noopener noreferrer" aria-label="International Billfish Tournament 73 · Club Náutico de San Juan (opens in new tab)"><img src="https://static.wixstatic.com/media/80c250_bfd41e8b8e22460c8bfe88dfa6fe8998~mv2.png" alt="International Billfish Tournament 73 · 2026 · Club Náutico de San Juan" loading="lazy" decoding="async"></a><a class="rw-fishing-partner" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()" href="https://marinacc.digital/torneo/?t=cap-cana-classic-2026" target="_blank" rel="noopener noreferrer" aria-label="Marina Cap Cana — visit website"><img src="https://static.wixstatic.com/media/80c250_e4abf55d62514d82ae14e097b86a5e07~mv2.png" alt="Marina Cap Cana" loading="lazy" decoding="async"></a></div>
 <section class="section"><div class="sectionhead"><h2>02 · 72-hour weather window</h2><span class="hint">Real forecast series · updates on page load</span></div><div class="grid2"><div class="card chartcard"><h3>Wind & gusts</h3><div class="meta">Knots · next 72 hours</div><svg class="chart" id="windchart" viewBox="0 0 640 225" preserveAspectRatio="none"></svg><div class="legend"><span><i class="dot" style="background:#36dbc9"></i>Wind</span><span><i class="dot" style="background:#e8bb69"></i>Gusts</span></div></div><div class="card chartcard"><h3>Seas & swell</h3><div class="meta">Significant wave height · feet</div><svg class="chart" id="wavechart" viewBox="0 0 640 225" preserveAspectRatio="none"></svg><div class="legend"><span><i class="dot" style="background:#66baf5"></i>Combined seas</span><span><i class="dot" style="background:#e8bb69"></i>Swell</span></div></div></div></section>
 <section class="section"><div class="sectionhead"><h2>03 · Tides & bite windows</h2><span class="hint" id="tidelabel">San Juan, NOAA 9755371 · predicted tide · ft MLLW</span></div><div class="grid2"><div class="card chartcard"><h3 id="tidetitle">San Juan tide curve</h3><div class="meta" id="tidesub">Today's predictions · Atlantic Standard Time (UTC−4)</div><svg class="chart" id="tidechart" viewBox="0 0 640 225" preserveAspectRatio="none"></svg><div class="source" id="tidesource">NOAA CO-OPS</div></div><div class="card"><h3 style="margin-top:0">High / low water</h3><div class="tideevents" id="tideevents"><div class="mini">Loading tide data…</div></div><div style="height:15px"></div><h3>☀ Sun & moon</h3><div class="tideevents"><div class="event"><span>Sunrise</span><strong id="sunrise">—</strong></div><div class="event"><span>Sunset</span><strong id="sunset">—</strong></div><div class="event"><span>Moon phase</span><strong id="moon">—</strong></div><div class="event"><span>Illumination</span><strong id="illum">—</strong></div></div><p class="mini">Solunar windows are astronomical planning cues, not proven predictions of fish activity.</p></div></div></section>
 <section class="section" id="professional-windows"><div class="sectionhead"><h2>03A · Offshore fishing windows</h2><span class="hint">Astronomical planning · not a catch prediction</span></div><div class="progrid"><div class="procard"><h3>Moon transit & solunar windows</h3><div class="prosub">24-hour planning timeline · AST · calculated astronomical approximation</div><div class="timeline" id="solunarTimeline"></div><div class="houraxis"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div><div class="prolegend"><span><i style="background:#1b746c"></i>Major ±75 min</span><span><i style="background:#4b5865"></i>Minor ±45 min</span><span><i style="background:#e8bb69"></i>Daylight indicator</span></div><div class="prodisclaimer">Windows are astronomical estimates based on lunar transit and are not verified feeding forecasts. Actual fishing success depends on bait, current, structure, weather and local conditions.</div></div><div class="procard"><h3>Barometric pressure</h3><div class="prosub">Hourly sea-level pressure · next 72 hours · hPa</div><svg class="chart" id="pressurechart" viewBox="0 0 640 225" preserveAspectRatio="none"></svg><div class="prostat"><div><small>Current</small><strong id="pressureNow">—</strong></div><div><small>Next 24h change</small><strong id="pressureDelta">—</strong></div></div></div></div></section><section class="section"><div class="sectionhead"><h2>04 · Blue-water intelligence</h2><span class="hint">Built from ocean model data · no API key required</span></div><div class="grid3"><div class="card chartcard wide"><h3>🌡 Sea surface temperature · offshore transect</h3><div class="meta" id="transectlabel">Sampled model temperatures along offshore points; not a satellite SST image</div><svg class="chart tall" id="sstchart" viewBox="0 0 640 270" preserveAspectRatio="none"></svg><div class="mini" id="sstread">Checking water temperature gradient…</div></div><div class="card chartcard"><h3>🧭 Ocean current trend</h3><div class="meta">Speed in knots · direction shown separately</div><svg class="chart tall" id="currentchart" viewBox="0 0 640 270" preserveAspectRatio="none"></svg><div class="mini" id="currentread">Loading currents…</div></div><div class="card chartcard"><h3>🛰️ Ocean color · MCI</h3><div class="meta" id="oceanRegion">CARICOOS / Sentinel-3 OLCI · maximum chlorophyll index</div><div class="satframe"><img id="chlorImage" alt="CARICOOS OLCI maximum chlorophyll index satellite image"><div id="chlorStatus" class="satstatus">Loading dated ocean-color observation…</div></div><div class="data-date" id="chlorDate">Satellite observation date shown when available</div><div class="mini">MCI is an ocean-color index, NOT quantitative chlorophyll-a (mg/m³). Historical imagery must not be treated as current fishing intelligence.</div><div class="links" style="margin-top:9px"><a id="chlorLink" href="https://www.caricoos.org/sargassum/OLCI/P_RICO/MCI" target="_blank" rel="noopener">CARICOOS ocean color ↗</a></div></div></div></section>
@@ -2045,9 +2057,20 @@ function rwOpenFishing(){
  }
  pane.classList.add('rw-open');
  document.body.style.overflow='hidden';
+ pane.scrollTop=0;
  frame.scrollTop=0;
  rwFishingScrollTop();
- requestAnimationFrame(rwFishingScrollTop);
+ requestAnimationFrame(()=>{
+   if(!pane.classList.contains('rw-open'))return;
+   pane.scrollTop=0;
+   rwFishingScrollTop();
+   requestAnimationFrame(()=>{
+     if(pane.classList.contains('rw-open')){
+       pane.scrollTop=0;
+       rwFishingScrollTop();
+     }
+   });
+ });
 }
 function rwCloseFishing(){
  document.getElementById('rw-fishing-detail').classList.remove('rw-open');
