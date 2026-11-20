@@ -778,6 +778,14 @@ main.grid>.rw-ibt73-mobile-card .rw-partner-pair>.rw-ibt73-sponsor{
 .rw-boater-tide strong{color:#b8e9f5}.rw-boater-week td small{display:block;color:#8fa9bd;font-size:10px;margin-top:3px}
 .rw-boater-week-source{padding:10px 15px 14px}
 @media(max-width:600px){.rw-boat-quick b{font-size:clamp(13px,4vw,19px)!important}.rw-boater-week-title{padding:12px}.rw-boater-week h3{font-size:16px}}
+</style><style id="rw-v114-boat-quick-responsive">
+/* Three compact boating readouts across all phone widths, including iPhone. */
+#mbody .rw-boat-quick{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important;width:100%;min-width:0;box-sizing:border-box}
+#mbody .rw-boat-quick>div{min-width:0!important;max-width:100%;padding:7px 3px!important;box-sizing:border-box;overflow:hidden}
+#mbody .rw-boat-quick .n{display:block;font-size:clamp(9px,2.5vw,12px)!important;line-height:1.25;white-space:nowrap}
+#mbody .rw-boat-quick b{font-size:clamp(13px,3.3vw,20px)!important;line-height:1.2;white-space:nowrap}
+#mbody .rw-boat-quick .rw-boat-extra{font-size:clamp(9px,2.45vw,12px)!important;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px;color:#b6cfe0}
+@media(max-width:420px){#mbody .rw-boat-quick{gap:4px!important}#mbody .rw-boat-quick>div{padding:6px 2px!important}}
 </style><style id="rw-v113-share-css">
 .rw-save-share{display:inline-flex;align-items:stretch;justify-content:center;flex:0 0 auto;
  border:1px solid var(--brass);border-radius:999px;background:#0c2237;overflow:hidden;
@@ -1351,9 +1359,20 @@ function chart(S,o){const n=S[0].a.length;if(n<2)return'<div class="n">Data not 
  o.l.forEach((t,i)=>{if(t)g+=`<text x="${X(i)}" y="${H-8}" text-anchor="middle">${t}</text>`});
  S.forEach((x,k)=>{if(o.bars&&k==0){const bw=(W-pl-pr)/n*.7;x.a.forEach((v,i)=>{if(!Number.isFinite(v))return;g+=`<rect x="${X(i)-bw/2}" y="${Y(v)}" width="${bw}" height="${Math.max(Y(lo)-Y(v),1)}" rx="2" fill="${x.c}" opacity=".85"/>`;if(o.barLabels)g+=`<text x="${X(i)}" y="${Math.max(17,Y(v)-9)}" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#E8F1F7" stroke="#0A1C2E" stroke-width="3" paint-order="stroke">${Math.round(v)}%</text>`})}else{const d=x.a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join('');if(k==0)g+=`<path d="${d}L${X(n-1)} ${Y(lo)}L${X(0)} ${Y(lo)}Z" fill="url(#g0)"/>`;g+=`<path d="${d}" fill="none" stroke="${x.c}" stroke-width="2.5" stroke-linejoin="round"/>`}});
  return g+`<circle cx="${X(0)}" cy="${Y(S[0].a[0])}" r="5" fill="${S[0].c}"/></g></svg>`}
+function rwBoatingCardExtra(i){
+ const windDir=D.w&&D.w.current&&D.w.current.wind_direction_10m;
+ const waveDir=D.m&&D.m.current&&D.m.current.wave_direction;
+ const wavePeriod=D.m&&D.m.current&&D.m.current.wave_period;
+ const compass=v=>Number.isFinite(v)?card(v)+' '+Math.round(v)+'°':'Direction N/A';
+ if(i===0)return 'From '+compass(windDir);
+ // Gust direction is not independently provided by this forecast. Label the
+ // prevailing wind direction explicitly rather than inventing a gust bearing.
+ if(i===1)return 'Wind from '+compass(windDir);
+ return 'From '+compass(waveDir)+' · '+(Number.isFinite(wavePeriod)?Number(wavePeriod).toFixed(1)+' s':'Period N/A');
+}
 function showD(c,d,S,o,note,side,afterChart="",chartClass=""){const f=v=>Math.abs(v)>=100?Math.round(v):v.toFixed(1),u=d.u&&d.u.length<4?d.u:'';
  const chartBlock=side?`<div class="two"><div><div class="dt">Forecast · Open-Meteo (next 48 h)</div>${chart(S,o)}</div><div><div class="dt">Observed · local PWS (last 24 h)</div>${side.h||side}</div></div>`:chart(S,o);
- const html=`<div class="dw"><div class="dh"><span class="ib" style="background:${c}22;color:${c}">${d.i}</span><div><div class="dt">${d.t}</div><div class="dv">${S[0]?f(S[0].a[0]):'–'}<small> ${d.u}</small></div></div></div><div class="leg">${S.map(x=>`<span><i style="background:${x.c}"></i>${x.n}</span>`).join('')}</div><div class="${chartClass||''}">${d===DET.boat?`<div class="sg rw-boat-quick">${S.slice(0,3).map((x,i)=>`<div><span class="n">${["💨 Wind","🌬️ Gusts","🌊 Waves"][i]}</span><b style="color:${x.c}">${f(x.a[0])}<small>${i===2?" ft":" kt"}</small></b></div>`).join("")}</div>`:""}${chartBlock}</div>${afterChart}${side&&side.fh?'<div class="dt" style="margin:14px 0 0">'+side.fh+'</div>':''}${d===DET.boat?"":`<div class="sg">${S.map(x=>{const a=x.a;return`<div><span class="n">${x.n}</span><b style="color:${x.c}">${f(a[0])}</b><span class="n">min ${f(Math.min(...a))} · max ${f(Math.max(...a))}</span></div>`}).join("")}</div>`}${side&&side.S?'<div class="dt" style="margin:14px 0 0">'+side.sh+'</div><div class="sg">'+side.S.map(x=>`<div><span class="n">${x.n}</span><b style="color:${x.c}">${f(x.v)}</b><span class="n">last 24 h: min ${f(Math.min(...x.a))} · max ${f(Math.max(...x.a))}</span></div>`).join('')+'</div>':''}<div class="dn n">${note}</div></div>`;
+ const html=`<div class="dw"><div class="dh"><span class="ib" style="background:${c}22;color:${c}">${d.i}</span><div><div class="dt">${d.t}</div><div class="dv">${S[0]?f(S[0].a[0]):'–'}<small> ${d.u}</small></div></div></div><div class="leg">${S.map(x=>`<span><i style="background:${x.c}"></i>${x.n}</span>`).join('')}</div><div class="${chartClass||''}">${d===DET.boat?`<div class="sg rw-boat-quick">${S.slice(0,3).map((x,i)=>`<div><span class="n">${["💨 Wind","🌬️ Gusts","🌊 Waves"][i]}</span><b style="color:${x.c}">${f(x.a[0])}<small>${i===2?" ft":" kt"}</small></b><span class="rw-boat-extra">${rwBoatingCardExtra(i)}</span></div>`).join("")}</div>`:""}${chartBlock}</div>${afterChart}${side&&side.fh?'<div class="dt" style="margin:14px 0 0">'+side.fh+'</div>':''}${d===DET.boat?"":`<div class="sg">${S.map(x=>{const a=x.a;return`<div><span class="n">${x.n}</span><b style="color:${x.c}">${f(a[0])}</b><span class="n">min ${f(Math.min(...a))} · max ${f(Math.max(...a))}</span></div>`}).join("")}</div>`}${side&&side.S?'<div class="dt" style="margin:14px 0 0">'+side.sh+'</div><div class="sg">'+side.S.map(x=>`<div><span class="n">${x.n}</span><b style="color:${x.c}">${f(x.v)}</b><span class="n">last 24 h: min ${f(Math.min(...x.a))} · max ${f(Math.max(...x.a))}</span></div>`).join('')+'</div>':''}<div class="dn n">${note}</div></div>`;
  $('mt').textContent=d.t;$('mbody').className='detail-view';$('mbody').innerHTML=html;activateDetail()}
 // Seven-day marine outlook: aggregate the existing hourly model data by local forecast day.
 function sevenDayMarine(){
